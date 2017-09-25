@@ -51,7 +51,7 @@ fn init_game(mut grid: &mut [[i8; 4]; 4])
 
 fn move_left(mut grid: &mut [[i8; 4]; 4])
 {
-    for i in 0..4
+    for _ in 0..4
     {
         for x in 0..grid.len()
         {
@@ -74,7 +74,7 @@ fn move_left(mut grid: &mut [[i8; 4]; 4])
 
 fn move_right(mut grid: &mut [[i8; 4]; 4])
 {
-    for i in 0..4
+    for _ in 0..4
     {
         for x in 0..grid.len()
         {
@@ -97,7 +97,7 @@ fn move_right(mut grid: &mut [[i8; 4]; 4])
 
 fn move_down(mut grid: &mut [[i8; 4]; 4])
 {
-    for i in 0..4
+    for _ in 0..4
     {
         for x in 0..grid.len()-1
         {
@@ -120,7 +120,7 @@ fn move_down(mut grid: &mut [[i8; 4]; 4])
 
 fn move_up(mut grid: &mut [[i8; 4]; 4])
 {
-    for i in 0..4
+    for _ in 0..4
     {
         for x in 1..grid.len()
         {
