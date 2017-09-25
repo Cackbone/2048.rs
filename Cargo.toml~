@@ -1,6 +1,0 @@
-[package]
-name = "rust_2048"
-version = "0.1.0"
-authors = ["Cackbone AKA Cédric Legendre <contact@cackbone.fr>"]
-
-[dependencies]
