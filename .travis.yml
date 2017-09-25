@@ -7,5 +7,6 @@ rust:
 matrix:
   allow_failures:
     - rust: nightly
-
-script: make all
+script:
+  - cargo build --verbose --all
+  - cargo test --verbose --all
