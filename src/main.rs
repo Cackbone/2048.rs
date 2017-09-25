@@ -69,7 +69,6 @@ fn move_grid(d: Direction, mut grid: &mut [[i8; 4]; 4])
 		{
 			for y in (if y_delta == 1 {1} else {0})..(if y_delta == -1 {grid.len() - 1} else {grid.len()})
 			{
-				println!("x: {}, x_delta: {}, y: {}, y_delta: {}", x, x_delta, y, y_delta);
 				if grid[((x as i8) - x_delta) as usize][((y as i8) - y_delta) as usize] == 0
 				{
 					grid[((x as i8) - x_delta) as usize][((y as i8) - y_delta) as usize] = grid[x][y];
