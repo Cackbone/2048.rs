@@ -4,6 +4,10 @@ use rand::Rng;
 use std::io;
 use std::convert::AsRef;
 
+enum Direction {
+	Up, Right, Down, Left
+}
+
 fn main()
 {
     // Grid 4*4
@@ -21,10 +25,10 @@ fn main()
         key = input_key();
         match key.as_ref()
         {
-            "2\n" => move_down(&mut grid),
-            "4\n" => move_left(&mut grid),
-            "6\n" => move_right(&mut grid),
-            "8\n" => move_up(&mut grid),
+            "2\n" => move_grid(Direction::Up, &mut grid),
+            "4\n" => move_grid(Direction::Left, &mut grid),
+            "6\n" => move_grid(Direction::Right, &mut grid),
+            "8\n" => move_grid(Direction::Down, &mut grid),
             _ => valid = false,
         }
         
@@ -48,97 +52,37 @@ fn init_game(mut grid: &mut [[i8; 4]; 4])
     display_grid(*grid);
 }
 
-
-fn move_left(mut grid: &mut [[i8; 4]; 4])
+fn move_grid(d: Direction, mut grid: &mut [[i8; 4]; 4])
 {
-    for _ in 0..4
-    {
-        for x in 0..grid.len()
-        {
-            for y in 1..grid[x].len()  
-            {
-                if grid[x][y-1] == 0
-                {
-                    grid[x][y-1] = grid[x][y];
-                    grid[x][y] = 0;                    
-                }
-                else if grid[x][y-1] == grid[x][y]
-                {
-                    grid[x][y-1] += grid[x][y];
-                    grid[x][y] = 0;
-                }
-            }
-        }
-    }
-}
+	let mut x_delta:i8=0;
+	let mut y_delta:i8=0;
 
-fn move_right(mut grid: &mut [[i8; 4]; 4])
-{
-    for _ in 0..4
-    {
-        for x in 0..grid.len()
-        {
-            for y in 0..grid[x].len()-1  
-            {
-                if grid[x][y+1] == 0
-                {
-                    grid[x][y+1] = grid[x][y];
-                    grid[x][y] = 0;
-                }
-                else if grid[x][y+1] == grid[x][y]
-                {
-                    grid[x][y+1] += grid[x][y];
-                    grid[x][y] = 0;
-                }
-            }
-        }
-    }
-}
-
-fn move_down(mut grid: &mut [[i8; 4]; 4])
-{
-    for _ in 0..4
-    {
-        for x in 0..grid.len()-1
-        {
-            for y in 0..grid[x].len()  
-            {
-                if grid[x+1][y] == 0
-                {
-                    grid[x+1][y] = grid[x][y];
-                    grid[x][y] = 0;
-                }
-                else if grid[x+1][y] == grid[x][y]
-                {
-                    grid[x+1][y] += grid[x][y];
-                    grid[x][y] = 0;
-                }
-            }
-        }
-    }
-}
-
-fn move_up(mut grid: &mut [[i8; 4]; 4])
-{
-    for _ in 0..4
-    {
-        for x in 1..grid.len()
-        {
-            for y in 0..grid[x].len()  
-            {
-                if grid[x-1][y] == 0
-                {
-                    grid[x-1][y] = grid[x][y];
-                    grid[x][y] = 0;
-                }
-                else if grid[x-1][y] == grid[x][y]
-                {
-                    grid[x-1][y] += grid[x][y];
-                    grid[x][y] = 0;
-                }
-            }
-        }
-    }
+	match d {
+		Direction::Up => 	x_delta = -1,
+		Direction::Down => 	x_delta = 1,
+		Direction::Right => y_delta = -1,
+		Direction::Left => 	y_delta = 1
+	}
+	for _ in 0..4
+	{
+		for x in (if x_delta == 1 {1} else {0})..(if x_delta == -1 {grid.len() - 1} else {grid.len()})
+		{
+			for y in (if y_delta == 1 {1} else {0})..(if y_delta == -1 {grid.len() - 1} else {grid.len()})
+			{
+				println!("x: {}, x_delta: {}, y: {}, y_delta: {}", x, x_delta, y, y_delta);
+				if grid[((x as i8) - x_delta) as usize][((y as i8) - y_delta) as usize] == 0
+				{
+					grid[((x as i8) - x_delta) as usize][((y as i8) - y_delta) as usize] = grid[x][y];
+					grid[x][y] = 0;
+				}
+				else if grid[((x as i8) - x_delta) as usize][((y as i8) - y_delta) as usize] == grid[x][y]
+				{
+					grid[((x as i8) - x_delta) as usize][((y as i8) - y_delta) as usize] += grid[x][y];
+					grid[x][y] = 0;
+				}
+			}
+		} 
+	}
 }
 
 fn input_key() -> String
