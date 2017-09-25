@@ -201,28 +201,43 @@ fn display_grid(grid: [[i8; 4]; 4])
     for x in grid.iter()
     {
         print!("\t");
-        print_line('-');
-        print!("\n");
-        print!("\t| ");
+        print_line('-');;
+        print_blocks();
+        print!("\t|");
         for y in x.iter()
         {
             match *y
             {
-                0i8 => print!("  | "),
-                _ => print!("{} | ", y),
+                y if y == 0 => print!("         |"),
+                y if y < 10 => print!("    {}    |", y),
+                y if y >= 10 => print!("   {}    |", y),
+                y if y >= 100 => print!("  {}    |", y),  
+                _ => print!("  {}    ", y),
             }
+            
         }
         print!("\n");
+        print_blocks();  
     }
     print!("\t");
     print_line('-');
-    print!("\n");
 }
 
 fn print_line(ln_char: char)
 {
-    for _ in 0..17
+    for _ in 0..41
     {
         print!("{}", ln_char);
     }
+    print!("\n");
+}
+
+fn print_blocks()
+{
+    print!("\t");
+    for _ in 0..4
+    {
+        print!("|         ")
+    }
+    print!("|\n");
 }
