@@ -1,0 +1,5 @@
+# Vim tmp files
+*~
+
+# Rust compiled files
+target/

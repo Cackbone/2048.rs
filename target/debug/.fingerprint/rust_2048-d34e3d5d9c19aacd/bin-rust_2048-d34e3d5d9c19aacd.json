@@ -1,1 +1,0 @@
-{"rustc":4122851168452794038,"features":"[]","target":2658526114482929469,"profile":731176819336294830,"deps":[["rand v0.3.16",2664224218352602031]],"local":[{"MtimeBased":[[1506355224,38523308],"/home/orion/Documents/programming/Rust/Rust_2048/target/debug/.fingerprint/rust_2048-d34e3d5d9c19aacd/dep-bin-rust_2048-d34e3d5d9c19aacd"]}],"rustflags":[]}
