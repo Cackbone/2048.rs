@@ -3,6 +3,7 @@ use rand::distributions::{IndependentSample, Range};
 use rand::Rng;
 use std::io;
 use std::convert::AsRef;
+use std::process::Command;
 
 enum Direction {
 	Up, Right, Down, Left
@@ -14,25 +15,26 @@ fn main()
     let mut grid  = [[0i8; 4];4];
     let mut key;
     let mut valid = true;
-
+    let mut grid_bis = [[0i8; 4];4];
+    
     // Initialization
     init_game(&mut grid);
     
     // Main game-loop
     loop
     {
-        println!("Your turn (2: down, 4: left, 6: right, 8: top) :");
+        grid_bis = grid;
         key = input_key();
         match key.as_ref()
         {
-            "2\n" => move_grid(Direction::Up, &mut grid),
-            "4\n" => move_grid(Direction::Left, &mut grid),
-            "6\n" => move_grid(Direction::Right, &mut grid),
-            "8\n" => move_grid(Direction::Down, &mut grid),
+            "z\n" => move_grid(Direction::Up, &mut grid),
+            "q\n" => move_grid(Direction::Left, &mut grid),
+            "d\n" => move_grid(Direction::Right, &mut grid),
+            "s\n" => move_grid(Direction::Down, &mut grid),
             _ => valid = false,
         }
         
-        if valid
+        if valid && !same_grid(grid, grid_bis)
         {
             add_tile(&mut grid);
             display_grid(grid);
@@ -40,17 +42,36 @@ fn main()
         else
         {
             valid = true;
-            println!("Are you dummy ?");
         }
+        Command::new("clear").status();
+        println!("\t\t\t-- 2048 --");
+        display_grid(grid);
     }
 }
 
 fn init_game(mut grid: &mut [[i8; 4]; 4])
 {
-    println!("-- 2048 --");
+    Command::new("clear").status();
+    println!("\t\t\t-- 2048 --");
     add_tile(&mut grid);
     display_grid(*grid);
 }
+
+fn same_grid(grid: [[i8; 4]; 4], grid_bis: [[i8; 4]; 4]) -> bool
+{
+    for y in 0..4
+    {
+        for x in 0..4
+        {
+            if grid[x][y] != grid_bis[x][y]
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 
 fn move_grid(d: Direction, mut grid: &mut [[i8; 4]; 4])
 {
@@ -58,8 +79,8 @@ fn move_grid(d: Direction, mut grid: &mut [[i8; 4]; 4])
 	let mut y_delta:i8=0;
 
 	match d {
-		Direction::Up => 	x_delta = -1,
-		Direction::Down => 	x_delta = 1,
+		Direction::Up => 	x_delta = 1,
+		Direction::Down => 	x_delta = -1,
 		Direction::Right => y_delta = -1,
 		Direction::Left => 	y_delta = 1
 	}
