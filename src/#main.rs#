@@ -56,7 +56,11 @@ fn main()
 }
 
 fn win(grid: [[i8; 4]; 4]) -> bool
+{
+    
+}
 
+    
 fn grid_full(grid: [[i8; 4]; 4]) -> bool
 {
     for y in 0..4
