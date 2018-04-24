@@ -16,10 +16,10 @@ fn main()
     let mut key;
     let mut valid = true;
     let mut grid_bis = [[0i8; 4];4];
-    
+
     // Initialization
     init_game(&mut grid);
-    
+
     // Main game-loop
     loop
     {
@@ -33,7 +33,7 @@ fn main()
             "s\n" => move_grid(Direction::Down, &mut grid),
             _ => valid = false,
         }
-        
+
         if valid && !same_grid(grid, grid_bis)
         {
             add_tile(&mut grid);
@@ -42,20 +42,18 @@ fn main()
         else
         {
             valid = true;
-            
+
             if grid_full(grid)
             {
                 println!("Game over!");
                 break;
             }
-        }   
+        }
             Command::new("clear").status();
             println!("\t\t\t-- 2048 --");
             display_grid(grid);
         }
 }
-
-fn win(grid: [[i8; 4]; 4]) -> bool
 
 fn grid_full(grid: [[i8; 4]; 4]) -> bool
 {
@@ -71,8 +69,7 @@ fn grid_full(grid: [[i8; 4]; 4]) -> bool
     }
     return true;
 }
-    
-    
+
 fn init_game(mut grid: &mut [[i8; 4]; 4])
 {
     Command::new("clear").status();
@@ -125,7 +122,7 @@ fn move_grid(d: Direction, mut grid: &mut [[i8; 4]; 4])
 					grid[x][y] = 0;
 				}
 			}
-		} 
+		}
 	}
 }
 
@@ -148,7 +145,7 @@ fn add_tile(mut grid: &mut [[i8; 4]; 4])
     let value;
     let index;
 
-    
+
     rand_tile = range.ind_sample(&mut rand);
     value = match rand_value.choose(&values)
     {
@@ -160,7 +157,7 @@ fn add_tile(mut grid: &mut [[i8; 4]; 4])
 }
 
 fn get_free_tiles(grid: [[i8; 4]; 4]) -> Vec<(usize, usize)>
-{  
+{
     let mut free_tiles = Vec::new();
     let mut x_index = 0;
     let mut y_index = 0;
@@ -199,13 +196,13 @@ fn display_grid(grid: [[i8; 4]; 4])
                 y if y == 0 => print!("         |"),
                 y if y < 10 => print!("    {}    |", y),
                 y if y >= 10 => print!("   {}    |", y),
-                y if y >= 100 => print!("  {}    |", y),  
+                y if y >= 100 => print!("  {}    |", y),
                 _ => print!("  {}    ", y),
             }
-            
+
         }
         print!("\n");
-        print_blocks();  
+        print_blocks();
     }
     print!("\t");
     print_line('-');
